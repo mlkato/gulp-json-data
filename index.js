@@ -64,28 +64,27 @@ module.exports = function (opts) {
 
     async.each(keys, function (key, callback) {
 
+      gutil.log(key);
+      var newFile = new gutil.File({
+        path: file.path,
+        base: file.base,
+        cwd: file.cwd,
+        contents: new Buffer(file.contents.toString())
+      });
+
+      gutil.log(newFile);
+
       if (options.sepKey === '' || options.sepKey == null) {
 
-        var newFile = new gutil.File({
-          path: file.path,
-          base: file.base,
-          cwd: file.cwd,
-          contents: new Buffer(file.contents.toString()),
-          basename: key + options.extName
-        });
+        newFile.basename = key + options.extName;
 
-        gutil.log(newFile);
+        gutil.log(newFile.basename);
 
       } else {
-        var newFile = new gutil.File({
-          path: file.path,
-          base: file.base,
-          cwd: file.cwd,
-          contents: new Buffer(file.contents.toString()),
-          basename: options.sepKey + options.separetor + key + options.extName
-        });
 
-        gutil.log(newFile);
+        newFile.basename = options.sepKey + options.separetor + key + options.extName
+
+        gutil.log(newFile.basename);
       }
       that.push(newFile);
       callback(null, newFile);
