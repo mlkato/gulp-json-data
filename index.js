@@ -70,18 +70,22 @@ module.exports = function (opts) {
           path: file.path,
           base: file.base,
           cwd: file.cwd,
-          contents: new Buffer(file.contents.toString())
+          contents: new Buffer(file.contents.toString()),
+          basename: key + options.extName
         });
-        newFile.basename = key + options.extName;
+
+        gutil.log(newFile);
 
       } else {
         var newFile = new gutil.File({
           path: file.path,
           base: file.base,
           cwd: file.cwd,
-          contents: new Buffer(file.contents.toString())
+          contents: new Buffer(file.contents.toString()),
+          basename: options.sepKey + options.separetor + key + options.extName
         });
-        newFile.basename = options.sepKey + options.separetor + key + options.extName;
+
+        gutil.log(newFile);
       }
       that.push(newFile);
       callback(null, newFile);
@@ -89,9 +93,8 @@ module.exports = function (opts) {
     }, function (err, result) {
       gutil.log(err);
       gutil.log(result);
+      cb();
     });
-
-    cb();
 
   });
 };
