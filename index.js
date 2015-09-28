@@ -56,23 +56,24 @@ module.exports = function (opts) {
       } else {
         keys = json[options.keyName];
       }
-    });
 
-    async.each(keys, function (key, callback) {
+      async.each(keys, function (key, callback) {
 
-      var newFile = new gutil.File({
-        path: file.path,
-        base: file.base,
-        cwd: file.cwd,
-        contents: file.contents
+        var newFile = new gutil.File({
+          path: file.path,
+          base: file.base,
+          cwd: file.cwd,
+          contents: file.contents
+        });
+
+        if (options.sepKey === '' || options.sepKey == null) {
+          newFile.basename = key + options.extName;
+        } else {
+          newFile.basename = options.sepKey + options.separetor + key + options.extName
+        }
+        that.push(newFile);
+
       });
-
-      if (options.sepKey === '' || options.sepKey == null) {
-        newFile.basename = key + options.extName;
-      } else {
-        newFile.basename = options.sepKey + options.separetor + key + options.extName
-      }
-      that.push(newFile);
 
     });
 
