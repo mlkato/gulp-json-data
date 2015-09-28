@@ -63,15 +63,21 @@ module.exports = function (opts) {
       if (options.sepKey === '' || options.sepKey == null) {
 
         var newFile = new gutil.File({
-          contents: new Buffer(file),
-          basename: key + options.extName
+          path: file.path,
+          base: file.base,
+          cwd: file.cwd,
+          contents: new Buffer(file.contents.toString())
         });
+        newFile.basename = key + options.extName;
 
       } else {
         var newFile = new gutil.File({
-          contents: new Buffer(file),
-          basename: options.sepKey + options.separetor + key + options.extName
+          path: file.path,
+          base: file.base,
+          cwd: file.cwd,
+          contents: new Buffer(file.contents.toString())
         });
+        newFile.basename = options.sepKey + options.separetor + key + options.extName;
       }
       that.push(newFile);
 
