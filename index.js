@@ -63,18 +63,14 @@ module.exports = function (opts) {
       if (options.sepKey === '' || options.sepKey == null) {
 
         var newFile = new gutil.File({
-          base: path.join(__dirname, './test/dest/'),
-          cwd: __dirname,
           contents: new Buffer(file),
-          path: __dirname + '/test/dest/' + key + options.extName
+          basename: key + options.extName
         });
 
       } else {
         var newFile = new gutil.File({
-          base: path.join(__dirname, './test/dest/'),
-          cwd: __dirname,
           contents: new Buffer(file),
-          path: __dirname + '/test/dest/' + options.sepKey + options.separetor + key + options.extName
+          basename: options.sepKey + options.separetor + key + options.extName
         });
       }
       that.push(newFile);
