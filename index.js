@@ -50,8 +50,6 @@ module.exports = function (opts) {
     var files = glob.sync(options.jsonPath);
     var keys = [];
 
-    gutil.log(files);
-
     async.each(files, function (aFile) {
       var data = fs.readFileSync(aFile, 'utf-8');
       var json = JSON.parse(data);
@@ -64,30 +62,19 @@ module.exports = function (opts) {
       }
     });
 
-    console.log(keys);
     async.each(keys, function (key, callback) {
 
-      gutil.log(key);
       var newFile = new gutil.File({
         path: file.path,
         base: file.base,
         cwd: file.cwd,
-        contents: new Buffer(file.contents.toString())
+        contents: file.contents
       });
 
-      gutil.log(newFile);
-
       if (options.sepKey === '' || options.sepKey == null) {
-
         newFile.basename = key + options.extName;
-
-        gutil.log(newFile.basename);
-
       } else {
-
         newFile.basename = options.sepKey + options.separetor + key + options.extName
-
-        gutil.log(newFile.basename);
       }
       that.push(newFile);
 
