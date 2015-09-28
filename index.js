@@ -32,6 +32,10 @@ module.exports = function (opts) {
       return cb();
     }
 
+    gutil.log(file.path);
+    var originalPath = file.path;
+    gutil.log('original path : ', originalPath);
+
     if (options.jsonPath == null) {
       this.emit('error', new gutil.PluginError(PLUGIN_NAME, 'json path is required'));
       return cb();
