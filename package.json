@@ -1,0 +1,24 @@
+{
+  "name": "gulp-json-data",
+  "version": "0.0.1",
+  "description": "do something with json.",
+  "main": "index.js",
+  "scripts": {
+    "test": "$(npm bin)/mocha"
+  },
+  "author": "mlkato",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^1.4.2",
+    "fs": "0.0.2",
+    "glob": "^5.0.15",
+    "gulp-util": "^3.0.6",
+    "object-assign": "^4.0.1",
+    "path": "^0.12.7",
+    "q": "^1.4.1",
+    "through2": "^2.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.0"
+  }
+}
