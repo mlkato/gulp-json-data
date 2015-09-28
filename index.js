@@ -62,7 +62,7 @@ module.exports = function (opts) {
     });
 
 
-    async.each(keys, function (key) {
+    async.each(keys, function (key, callback) {
 
       if (options.sepKey === '' || options.sepKey == null) {
 
@@ -84,10 +84,13 @@ module.exports = function (opts) {
         newFile.basename = options.sepKey + options.separetor + key + options.extName;
       }
       that.push(newFile);
+      callback(null, newFile);
 
+    }, function (err, result) {
+      gutil.log(err);
+      gutil.log(result);
     });
 
-    this.push(file);
     cb();
 
   });
