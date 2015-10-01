@@ -16,6 +16,8 @@ module.exports = function (opts) {
     var defaultOptions = {
       jsonPath: '*.json',
       keyName: '',
+      keyForArray: '',
+      keyCombineWith: '',
       extName: '.html',
       separetor: '_',
       sepKey: ''
@@ -49,12 +51,23 @@ module.exports = function (opts) {
     async.each(files, function (aFile) {
       var data = fs.readFileSync(aFile, 'utf-8');
       var json = JSON.parse(data);
-      if (typeof json[options.keyName] === 'string') {
-        keys.push(json[options.keyName]);
-      } else if (Array.isArray(json[options.keyName])) {
-        keys = json[options.keyName];
+
+      if (typeof options.keyForArray === 'string' && options.keyForArray !== '') {
+        if (Array.isArray(json[options.keyName])) {
+          for (var i=0; i < json[options.keyName].length -1; i++) {
+            keys.push(json[options.keyName][i][options.keyForArray]);
+          }
+        }
       } else {
-        keys = json[options.keyName];
+
+        if (typeof json[options.keyName] === 'string') {
+          keys.push(json[options.keyName]);
+        } else if (Array.isArray(json[options.keyName])) {
+          keys = json[options.keyName];
+        } else {
+          keys = json[options.keyName];
+        }
+
       }
 
       async.each(keys, function (key, callback) {
@@ -67,9 +80,17 @@ module.exports = function (opts) {
         });
 
         if (options.sepKey === '' || options.sepKey == null) {
-          newFile.basename = key + options.extName;
+          if (typeof options.keyJoinWith === 'string' && options.keyCombineWith !== '') {
+            newFile.basename = options.keyCombineWith + key + options.extName
+          } else {
+            newFile.basename = key + options.extName;
+          }
         } else {
-          newFile.basename = options.sepKey + options.separetor + key + options.extName
+          if (typeof options.keyCombineWith === 'string' && options.keyCombineWith !== '') {
+            newFile.basename = options.sepKey + options.separetor + options.keyCombineWith + key + options.extName
+          } else {
+            newFile.basename = options.sepKey + options.separetor + key + options.extName
+          }
         }
         that.push(newFile);
 
