@@ -54,7 +54,7 @@ module.exports = function (opts) {
 
       if (typeof options.keyForArray === 'string' && options.keyForArray !== '') {
         if (Array.isArray(json[options.keyName])) {
-          for (var i=0; i < json[options.keyName].length -1; i++) {
+          for (var i=0; i < json[options.keyName].length; i++) {
             keys.push(json[options.keyName][i][options.keyForArray]);
           }
         }
